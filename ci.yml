@@ -2,7 +2,6 @@ version: 1
 preset: java-gradle
 
 agent:
-  label: "linux && docker"
   docker: "eclipse-temurin:21-jdk"   # lightweight Java 21 image
 
 env:
