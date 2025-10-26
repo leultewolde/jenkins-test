@@ -1,0 +1,27 @@
+version: 1
+preset: java-gradle
+
+agent:
+  label: "linux && docker"
+  docker: "eclipse-temurin:21-jdk"   # lightweight Java 21 image
+
+env:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs=-Xmx1G"
+  CI: "true"
+
+matrix:
+  checks:
+    - gradle.build
+    - gradle.test
+    - sh "./gradlew checkstyleMain checkstyleTest --no-daemon"
+
+deploy:
+  staging:
+    when: branch=main & !pr
+    steps:
+      - gradle.publish
+  prod:
+    when: tag=^v\\d+\\.\\d+\\.\\d+$
+    approve: group:release-managers
+    steps:
+      - gradle.publish
