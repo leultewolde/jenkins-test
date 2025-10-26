@@ -1,2 +1,2 @@
-@Library('mereb-ci-lib@v1') _
+@Library('mereb-ci-lib@main') _
 ciV1()
